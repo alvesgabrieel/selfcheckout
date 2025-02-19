@@ -30,7 +30,7 @@ model Restaurant {
 model MenuCategory {
   id           String     @id @default(uuid())
   name         String
-  restaurant   Restaurant @relation(fields: [restaurantId], references: [id]) //campo não irá ser criado na tabela, é apenas para mostrar ao prisma ao relação que existe entre as tabelas
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade) //campo não irá ser criado na tabela, é apenas para mostrar ao prisma ao relação que existe entre as tabelas
   restaurantId String
   products     Product[]
   createdAt    DateTime   @default(now())
@@ -44,9 +44,9 @@ model Product {
   price          Float
   imageUrl       String
   ingredients    String[]
-  menuCategory   MenuCategory    @relation(fields: [menuCategoryId], references: [id])
+  menuCategory   MenuCategory    @relation(fields: [menuCategoryId], references: [id], onDelete: Cascade)
   menuCategoryId String
-  restaurant     Restaurant      @relation(fields: [restaurantId], references: [id])
+  restaurant     Restaurant      @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   restaurantId   String
   orderProducts  OrderProducts[]
   createdAt      DateTime        @default(now())
@@ -55,7 +55,7 @@ model Product {
 
 model Order {
   id                Int               @id @default(autoincrement())
-  restaurant        Restaurant        @relation(fields: [restaurantId], references: [id])
+  restaurant        Restaurant        @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   restaurantId      String
   total             Float
   status            OrderStatus
@@ -69,9 +69,9 @@ model OrderProducts {
   id        String   @id @default(uuid())
   quantity  Int
   price     Float
-  product   Product  @relation(fields: [productId], references: [id])
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId String
-  order     Order    @relation(fields: [OrderId], references: [id])
+  order     Order    @relation(fields: [OrderId], references: [id],  onDelete: Cascade)
   OrderId   Int
   createdAt DateTime @default(now())
   updateAt  DateTime @updatedAt
