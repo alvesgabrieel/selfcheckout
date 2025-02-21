@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 
 import { db } from "@/lib/prisma";
 
+import ProductDetails from "./components/product-details";
 import ProductHeader from "./components/product-header";
 
 interface ProductPageProps {
@@ -13,16 +14,29 @@ const ProductPage = async ({params}: ProductPageProps) => {
     const {slug, productId} = await params;
     //instanciar um produto especifico pelo id que foi selecionado
     const product = await db.product.findUnique({
-        where: {id: productId}
+        where: {id: productId},
+        include: {
+            restaurant: {
+                select: {
+                    slug: true,
+                    name: true,
+                    avatarImageUrl: true,
+                }
+            }
+        }
     })
     if(!product) {
         return notFound();
     }
+
+    if(product.restaurant.slug.toUpperCase() != slug.toUpperCase()) {
+        return notFound();
+    }
     return ( 
-        <>
+        <div className="h-full flex flex-col">
             <ProductHeader product={product}/>
-           {slug}
-        </>
+            <ProductDetails product={product}/>
+        </div>
      );
 }
  
