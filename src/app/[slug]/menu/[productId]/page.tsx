@@ -6,7 +6,7 @@ import ProductDetails from "./components/product-details";
 import ProductHeader from "./components/product-header";
 
 interface ProductPageProps {
-  params: Promise<{ slug: string; productId: string }>;
+  params: { slug: string; productId: string };
 }
 
 const ProductPage = async ({ params }: ProductPageProps) => {

@@ -10,7 +10,7 @@ interface RestaurantPageProps {
 }
 
 const RestaurantPage = async ({ params }: RestaurantPageProps) => {
-  const { slug } = params;
+  const { slug } = await params;
   const restaurant = await getRestaurantBySlug(slug);
   if (!restaurant) {
     return notFound();
