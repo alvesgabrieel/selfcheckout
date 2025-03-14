@@ -6,11 +6,11 @@ import { getRestaurantBySlug } from "@/data/get-restaurant-by-slug";
 import ConsumptionMethodOption from "./components/consumption-method-option";
 
 interface RestaurantPageProps {
-  params: Promise<{ slug: string }>;
+  params: { slug: string };
 }
 
 const RestaurantPage = async ({ params }: RestaurantPageProps) => {
-  const { slug } = await params;
+  const { slug } = params;
   const restaurant = await getRestaurantBySlug(slug);
   if (!restaurant) {
     return notFound();
@@ -31,8 +31,8 @@ const RestaurantPage = async ({ params }: RestaurantPageProps) => {
         <h3 className="text-2xl font-semibold">Seja bem vindo!</h3>
         <p>Projeto criado por Gabriel Alves</p>
         <p className="opacity-55">
-           Estamos aqui para oferecer
-          praticidade e sabor em cada detalhe! Como prefere aproveitar sua refeição?
+          Estamos aqui para oferecer praticidade e sabor em cada detalhe! Como
+          prefere aproveitar sua refeição?
         </p>
       </div>
       <div className="grid grid-cols-2 gap-4 pt-14">

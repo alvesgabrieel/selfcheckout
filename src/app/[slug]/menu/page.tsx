@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 
-import { db } from "@/lib/prisma";
+import { getRestaurantWithCategoriesAndProducts } from "@/data/get-restaurant-with-categories-and-products";
 
 import RestaurantCategories from "./components/categories";
 import RestaurantsHeader from "./components/header";
@@ -20,20 +20,12 @@ const RestaurantsMenuPage = async ({
 }: RestaurantsMenuPageProps) => {
   const { slug } = await params;
   const { consumptionMethod } = await searchParams;
+
   if (!consumptionMethodValid(consumptionMethod)) {
     return notFound();
   }
-  const restaurant = await db.restaurant.findUnique({
-    where: { slug },
-    include: {
-      menuCategories: {
-        include: {
-          products: true,
-        },
-      },
-    },
-  });
-  // console.log(restaurant?.menuCategories);
+
+  const restaurant = await getRestaurantWithCategoriesAndProducts(slug);
   if (!restaurant) {
     return notFound();
   }
