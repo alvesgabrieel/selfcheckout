@@ -6,8 +6,8 @@ import RestaurantCategories from "./components/categories";
 import RestaurantsHeader from "./components/header";
 
 interface RestaurantsMenuPageProps {
-  params: { slug: string };
-  searchParams: { consumptionMethod: string };
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<{ consumptionMethod: string }>;
 }
 
 const consumptionMethodValid = (value: string) => {

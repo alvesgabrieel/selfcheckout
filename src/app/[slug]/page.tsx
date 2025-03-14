@@ -6,7 +6,7 @@ import { getRestaurantBySlug } from "@/data/get-restaurant-by-slug";
 import ConsumptionMethodOption from "./components/consumption-method-option";
 
 interface RestaurantPageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 const RestaurantPage = async ({ params }: RestaurantPageProps) => {
